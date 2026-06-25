@@ -686,7 +686,19 @@ $.extend( $.validator, {
 		},
 
 		clean: function( selector ) {
-			return $( selector )[ 0 ];
+			if ( selector && selector.nodeType ) {
+				return selector;
+			}
+
+			if ( selector && selector.jquery ) {
+				return selector[ 0 ];
+			}
+
+			if ( typeof selector === "string" ) {
+				return $.find( selector, this.currentForm )[ 0 ];
+			}
+
+			return undefined;
 		},
 
 		errors: function() {
@@ -1083,7 +1095,7 @@ $.extend( $.validator, {
 			}
 
 			// Always apply ignore filter
-			return $( element ).not( this.settings.ignore )[ 0 ];
+			return $( [] ).add( element ).not( this.settings.ignore )[ 0 ];
 		},
 
 		checkable: function( element ) {
