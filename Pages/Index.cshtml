@@ -1,0 +1,267 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Weather App";
+}
+
+<div class="hero-section @(Model.WeatherData?.WeatherType ?? "default")">
+    <div class="floating-particles"></div>
+    <div class="container-fluid">
+        <div class="row min-vh-100 align-items-center">
+            <div class="col-12">
+                <div class="hero-content text-center">
+                    <div class="brand-logo mb-5 magical-entrance">
+                        <div class="icon-container">
+                            <i class="fas fa-cloud-sun brand-icon"></i>
+                        </div>
+                        <h1 class="brand-title">WeatherNow</h1>
+                        <p class="brand-subtitle">Natural Weather Intelligence</p>
+                    </div>
+                    
+                    <div class="search-container">
+                        <form method="post">
+                            <div class="search-input-container">
+                                <i class="fas fa-search search-icon"></i>
+                                <input type="text" class="futuristic-input" 
+                                       asp-for="City" placeholder="Search for any city worldwide..." required>
+                                <button type="submit" class="quantum-btn" id="searchBtn">
+                                    <span class="btn-text">Get Weather</span>
+                                    <span class="btn-loader d-none">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </form>
+                        
+                        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                        {
+                            <div class="neon-error">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                @Model.ErrorMessage
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.WeatherData != null)
+{
+    <div class="weather-dashboard @(Model.WeatherData.WeatherType)">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="weather-main-card spectacular-entrance">
+                        <div class="weather-header">
+                            <div class="location-info">
+                                <h2 class="city-name">@Model.WeatherData.CityName</h2>
+                                <p class="current-time" id="currentTime"></p>
+                            </div>
+                            <div class="weather-icon-container">
+                                <img src="https://openweathermap.org/img/wn/@(Model.WeatherData.Icon)@@4x.png" 
+                                     alt="@Model.WeatherData.Description" class="main-weather-icon">
+                            </div>
+                        </div>
+                        
+                        <div class="temperature-section">
+                            <div class="main-temperature">
+                                @Math.Round(Model.WeatherData.Temperature)°C
+                            </div>
+                            <div class="weather-description">@Model.WeatherData.Description</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row g-4 mt-2">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="cosmic-card slide-in-left" style="animation-delay: 0.1s">
+                        <div class="metric-header">
+                            <div class="neon-icon">
+                                <i class="fas fa-tint"></i>
+                            </div>
+                            <div class="glowing-label">Humidity</div>
+                        </div>
+                        <div class="metric-content">
+                            <div class="holographic-number">@Model.WeatherData.Humidity</div>
+                            <div class="cyber-unit">%</div>
+                        </div>
+                        <div class="metric-footer">
+                            <div class="neon-progress">
+                                <div class="rainbow-bar" style="width: @Model.WeatherData.Humidity%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="cosmic-card slide-in-left" style="animation-delay: 0.2s">
+                        <div class="metric-header">
+                            <div class="neon-icon">
+                                <i class="fas fa-wind"></i>
+                            </div>
+                            <div class="glowing-label">Wind Speed</div>
+                        </div>
+                        <div class="metric-content">
+                            <div class="holographic-number">@Math.Round(Model.WeatherData.WindSpeed, 1)</div>
+                            <div class="cyber-unit">m/s</div>
+                        </div>
+                        <div class="metric-footer">
+                            <div class="spinning-arrow">
+                                <i class="fas fa-location-arrow"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="cosmic-card slide-in-right" style="animation-delay: 0.3s">
+                        <div class="metric-header">
+                            <div class="neon-icon">
+                                <i class="fas fa-thermometer-half"></i>
+                            </div>
+                            <div class="glowing-label">Pressure</div>
+                        </div>
+                        <div class="metric-content">
+                            <div class="holographic-number">@Model.WeatherData.Pressure</div>
+                            <div class="cyber-unit">hPa</div>
+                        </div>
+                        <div class="metric-footer">
+                            <div class="neon-gauge">
+                                <div class="rainbow-level" style="height: @Math.Min(Model.WeatherData.Pressure / 15, 100)%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="cosmic-card slide-in-right" style="animation-delay: 0.4s">
+                        <div class="metric-header">
+                            <div class="neon-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="glowing-label">Visibility</div>
+                        </div>
+                        <div class="metric-content">
+                            <div class="holographic-number">Clear</div>
+                            <div class="cyber-unit">∞</div>
+                        </div>
+                        <div class="metric-footer">
+                            <div class="visibility-dots">
+                                <span class="neon-dot active"></span>
+                                <span class="neon-dot active"></span>
+                                <span class="neon-dot active"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Rain Probability Alert -->
+            @if (Model.WeatherData.RainProbability > 50)
+            {
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="alert alert-info rain-alert">
+                            <i class="fas fa-cloud-rain"></i>
+                            <strong>Rain Expected!</strong> There's a @Model.WeatherData.RainProbability% chance of rain today. Don't forget your umbrella! ☂️
+                        </div>
+                    </div>
+                </div>
+            }
+            
+            <!-- 5-Day Forecast -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h3 class="section-title">5-Day Forecast</h3>
+                    <div class="forecast-container">
+                        @foreach (var day in Model.WeatherData.Forecast)
+                        {
+                            <div class="forecast-card slide-in-left">
+                                <div class="forecast-date">@day.Date.ToString("ddd")</div>
+                                <div class="forecast-icon">
+                                    <img src="https://openweathermap.org/img/wn/@(day.Icon).png" alt="@day.Description">
+                                </div>
+                                <div class="forecast-temp">@Math.Round(day.Temperature)°</div>
+                                <div class="forecast-desc">@day.Description</div>
+                                <div class="rain-chance">
+                                    <i class="fas fa-tint"></i> @day.RainChance%
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Historical Weather -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h3 class="section-title">Past Week Weather</h3>
+                    <div class="historical-container">
+                        @foreach (var day in Model.WeatherData.Historical)
+                        {
+                            <div class="historical-card slide-in-right">
+                                <div class="historical-date">@day.Date.ToString("MMM dd")</div>
+                                <div class="historical-icon">
+                                    <img src="https://openweathermap.org/img/wn/@(day.Icon).png" alt="@day.Description">
+                                </div>
+                                <div class="historical-temp">@Math.Round(day.Temperature)°C</div>
+                                <div class="historical-desc">@day.Description</div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Search form loading
+    const form = document.querySelector('form');
+    const searchBtn = document.getElementById('searchBtn');
+    
+    if (form && searchBtn) {
+        form.addEventListener('submit', function() {
+            const btnText = searchBtn.querySelector('.btn-text');
+            const btnLoader = searchBtn.querySelector('.btn-loader');
+            
+            if (btnText && btnLoader) {
+                btnText.classList.add('d-none');
+                btnLoader.classList.remove('d-none');
+                searchBtn.disabled = true;
+            }
+        });
+    }
+    
+    // Current time display
+    function updateTime() {
+        const timeElement = document.getElementById('currentTime');
+        if (timeElement) {
+            const now = new Date();
+            timeElement.textContent = now.toLocaleString();
+        }
+    }
+    
+    // Update time if weather dashboard exists
+    if (document.querySelector('.weather-dashboard')) {
+        updateTime();
+        setInterval(updateTime, 1000);
+    }
+    
+    // Simple floating particles
+    const container = document.querySelector('.floating-particles');
+    if (container) {
+        for (let i = 0; i < 10; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            container.appendChild(particle);
+        }
+    }
+});
+</script>

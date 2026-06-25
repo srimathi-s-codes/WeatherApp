@@ -1,0 +1,53 @@
+@page
+@model WeatherApp.Pages.AboutModel
+@{
+    ViewData["Title"] = "About";
+}
+
+<div class="about-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="about-content text-center">
+                    <h1 class="display-4 mb-4">About Weather App</h1>
+                    <div class="card shadow-lg">
+                        <div class="card-body p-5">
+                            <p class="lead mb-4">
+                                Welcome to our modern weather application! This app provides real-time weather 
+                                information for cities around the world.
+                            </p>
+                            <p class="mb-4">
+                                Built with cutting-edge technology, our weather app delivers accurate and 
+                                up-to-date weather data including temperature, humidity, wind speed, and 
+                                atmospheric pressure.
+                            </p>
+                            <div class="tech-stack mb-4">
+                                <h4>Built With:</h4>
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-check text-success"></i> ASP.NET Core Razor Pages</li>
+                                            <li><i class="fas fa-check text-success"></i> Bootstrap 5</li>
+                                            <li><i class="fas fa-check text-success"></i> OpenWeatherMap API</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-check text-success"></i> Responsive Design</li>
+                                            <li><i class="fas fa-check text-success"></i> Modern CSS</li>
+                                            <li><i class="fas fa-check text-success"></i> Dynamic Backgrounds</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-muted">
+                                Weather data is provided by OpenWeatherMap API, ensuring reliable and 
+                                accurate weather information for your location.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

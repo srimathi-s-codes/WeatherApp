@@ -1,0 +1,55 @@
+@page
+@model WeatherApp.Pages.AdminModel
+@{
+    ViewData["Title"] = "Admin - Messages";
+}
+
+<div class="weather-dashboard">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1 class="section-title mb-0">Admin - Contact Messages</h1>
+                    <form method="post" asp-page-handler="Logout">
+                        <button type="submit" class="btn btn-outline-danger">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </form>
+                </div>
+                
+                @if (Model.Messages.Any())
+                {
+                    <div class="row">
+                        @foreach (var message in Model.Messages)
+                        {
+                            <div class="col-md-6 mb-4">
+                                <div class="cosmic-card">
+                                    <div class="metric-header">
+                                        <h5 class="glowing-label">@message.Name</h5>
+                                        <small class="cyber-unit">@message.Email</small>
+                                        <small class="cyber-unit">@message.CreatedAt.ToString("MMM dd, yyyy HH:mm")</small>
+                                    </div>
+                                    <div class="metric-content">
+                                        <p class="text-muted">@message.Message</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center">
+                        <div class="cosmic-card">
+                            <div class="metric-content">
+                                <i class="neon-icon fas fa-inbox"></i>
+                                <p class="holographic-number">No Messages</p>
+                                <p class="cyber-unit">No contact messages received yet.</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
