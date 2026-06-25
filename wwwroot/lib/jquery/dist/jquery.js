@@ -1273,11 +1273,20 @@ function setDocument( node ) {
 	// Regex strategy adopted from Diego Perini
 	assert( function( el ) {
 
-		var input;
+		var input,
+			escapedExpando = ( expando + "" ).replace( /[&<>"']/g, function( ch ) {
+				return {
+					"&": "&amp;",
+					"<": "&lt;",
+					">": "&gt;",
+					"\"": "&quot;",
+					"'": "&#39;"
+				}[ ch ];
+			} );
 
 		documentElement.appendChild( el ).innerHTML =
-			"<a id='" + expando + "' href='' disabled='disabled'></a>" +
-			"<select id='" + expando + "-\r\\' disabled='disabled'>" +
+			"<a id='" + escapedExpando + "' href='' disabled='disabled'></a>" +
+			"<select id='" + escapedExpando + "-\r\\' disabled='disabled'>" +
 			"<option selected=''></option></select>";
 
 		// Support: iOS <=7 - 8 only
